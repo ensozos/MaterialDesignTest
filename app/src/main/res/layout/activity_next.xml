@@ -1,0 +1,17 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.zosimadis.ilias.materialdesign.com.zosimadis.ilias.activities.NextActivity">
+
+    <include
+        android:id="@+id/id_bar_next"
+        layout="@layout/action_bar" />
+
+    <TextView
+        android:layout_below="@+id/id_bar_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_world" />
+
+</RelativeLayout>

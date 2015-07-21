@@ -1,20 +1,32 @@
-package com.zosimadis.ilias.materialdesign;
+package com.zosimadis.ilias.materialdesign.com.zosimadis.ilias.activities;
 
-import android.app.ActionBar;
+import android.content.Intent;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.zosimadis.ilias.materialdesign.R;
+
 
 public class MainActivity extends ActionBarActivity {
+
+    private android.support.v7.widget.Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.id_bar);
+        setSupportActionBar(toolbar);
+
+        NavigationDrawerFragmnet drawerFragmnet = (NavigationDrawerFragmnet)
+                getFragmentManager().findFragmentById(R.id.nav_fragment_id);
+
+        drawerFragmnet.setUp(R.id.nav_fragment_id ,(DrawerLayout)  findViewById(R.id.drawer_layout_id),toolbar);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -34,6 +46,11 @@ public class MainActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+        if (id == R.id.navigate) {
+            startActivity(new Intent(this, NextActivity.class));
+            return true;
+        }
+
 
         return super.onOptionsItemSelected(item);
     }
