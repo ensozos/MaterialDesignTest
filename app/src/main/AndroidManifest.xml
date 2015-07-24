@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".com.zosimadis.ilias.activities.MainActivity"
+            android:name=".com.zosimadis.ilias.materialdesign.MainActivity"
             android:label="@string/title_activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,11 +17,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".com.zosimadis.ilias.activities.NextActivity"
+            android:name=".com.zosimadis.ilias.materialdesign.NextActivity"
             android:label="@string/title_activity_next">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".com.zosimadis.ilias.activities.MainActivity" />
+                android:value=".com.zosimadis.ilias.materialdesign.MainActivity" />
         </activity>
     </application>
 

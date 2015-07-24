@@ -1,4 +1,4 @@
-package com.zosimadis.ilias.materialdesign.com.zosimadis.ilias.activities;
+package com.zosimadis.ilias.materialdesign.com.zosimadis.ilias.materialdesign;
 
 /**
  * Created by ilias on 21/7/2015.

@@ -1,4 +1,4 @@
-package com.zosimadis.ilias.materialdesign.com.zosimadis.ilias.activities;
+package com.zosimadis.ilias.materialdesign.com.zosimadis.ilias.materialdesign;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.zosimadis.ilias.materialdesign.R;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 

@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.zosimadis.ilias.materialdesign.com.zosimadis.ilias.activities.NextActivity">
+    tools:context="com.zosimadis.ilias.materialdesign.com.zosimadis.ilias.materialdesign.NextActivity">
 
     <include
         android:id="@+id/id_bar_next"

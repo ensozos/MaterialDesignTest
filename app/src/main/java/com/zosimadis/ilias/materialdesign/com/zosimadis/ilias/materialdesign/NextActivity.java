@@ -1,7 +1,6 @@
-package com.zosimadis.ilias.materialdesign.com.zosimadis.ilias.activities;
+package com.zosimadis.ilias.materialdesign.com.zosimadis.ilias.materialdesign;
 
-import android.content.Intent;
-import android.support.v4.widget.DrawerLayout;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,28 +9,24 @@ import android.view.MenuItem;
 import com.zosimadis.ilias.materialdesign.R;
 
 
-public class MainActivity extends ActionBarActivity {
+public class NextActivity extends ActionBarActivity {
 
     private android.support.v7.widget.Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.id_bar);
+        setContentView(R.layout.activity_next);
+
+        toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.id_bar_next);
         setSupportActionBar(toolbar);
-
-        NavigationDrawerFragmnet drawerFragmnet = (NavigationDrawerFragmnet)
-                getFragmentManager().findFragmentById(R.id.nav_fragment_id);
-
-        drawerFragmnet.setUp(R.id.nav_fragment_id ,(DrawerLayout)  findViewById(R.id.drawer_layout_id),toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_next, menu);
         return true;
     }
 
@@ -46,11 +41,11 @@ public class MainActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-        if (id == R.id.navigate) {
-            startActivity(new Intent(this, NextActivity.class));
+
+        if(id == android.R.id.home){
+            NavUtils.navigateUpFromSameTask(this);
             return true;
         }
-
 
         return super.onOptionsItemSelected(item);
     }
