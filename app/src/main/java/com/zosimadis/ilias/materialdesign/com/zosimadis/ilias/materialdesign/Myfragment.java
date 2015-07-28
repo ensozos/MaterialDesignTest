@@ -1,6 +1,7 @@
 package com.zosimadis.ilias.materialdesign.com.zosimadis.ilias.materialdesign;
 
 
+import android.app.DownloadManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,7 +11,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.zosimadis.ilias.materialdesign.R;
+import com.zosimadis.ilias.materialdesign.com.zosimadis.ilias.materialdesign.Network.VolleySingleton;
 
 
 /**
@@ -36,6 +43,21 @@ public class Myfragment extends Fragment {
             textView.setText("The Page Selected Is " + bundle.getInt("position"));
         }
 
+        RequestQueue queue = VolleySingleton.getInstance().getRequestQueue();
+        String url = "http://developer.android.com/intl/zh-cn/training/volley/simple.html";
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(getActivity(), "response " + response, Toast.LENGTH_LONG).show();
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(), "error " + error, Toast.LENGTH_LONG).show();
+            }
+        });
+        queue.add(stringRequest);
         return layout;
 
     }
