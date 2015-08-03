@@ -1,9 +1,7 @@
-package com.zosimadis.ilias.materialdesign.com.zosimadis.ilias.materialdesign;
+package com.zosimadis.ilias.materialdesign.Activities;
 
 import android.app.Application;
 import android.content.Context;
-
-import com.android.volley.RequestQueue;
 
 /**
  * Created by ilias on 28/7/2015.

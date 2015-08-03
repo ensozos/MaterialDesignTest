@@ -1,7 +1,5 @@
-package com.zosimadis.ilias.materialdesign.com.zosimadis.ilias.materialdesign;
+package com.zosimadis.ilias.materialdesign.Activities;
 
-
-import android.app.DownloadManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,14 +9,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.zosimadis.ilias.materialdesign.Network.VolleySingleton;
 import com.zosimadis.ilias.materialdesign.R;
-import com.zosimadis.ilias.materialdesign.com.zosimadis.ilias.materialdesign.Network.VolleySingleton;
-
 
 /**
  * Created by Windows on 23-01-2015.

@@ -1,4 +1,4 @@
-package com.zosimadis.ilias.materialdesign.com.zosimadis.ilias.materialdesign;
+package com.zosimadis.ilias.materialdesign.Activities;
 
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;

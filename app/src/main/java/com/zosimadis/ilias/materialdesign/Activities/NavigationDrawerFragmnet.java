@@ -1,4 +1,4 @@
-package com.zosimadis.ilias.materialdesign.com.zosimadis.ilias.materialdesign;
+package com.zosimadis.ilias.materialdesign.Activities;
 
 
 import android.content.Context;

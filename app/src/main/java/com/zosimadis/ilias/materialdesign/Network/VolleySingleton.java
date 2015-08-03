@@ -1,13 +1,12 @@
-package com.zosimadis.ilias.materialdesign.com.zosimadis.ilias.materialdesign.Network;
+package com.zosimadis.ilias.materialdesign.Network;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.LruCache;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-import com.zosimadis.ilias.materialdesign.com.zosimadis.ilias.materialdesign.MyApplication;
+import com.zosimadis.ilias.materialdesign.Activities.MyApplication;
 
 /**
  * Created by ilias on 28/7/2015.

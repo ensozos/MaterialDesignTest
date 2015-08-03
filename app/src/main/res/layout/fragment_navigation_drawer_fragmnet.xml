@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#DADADA"
-    tools:context="com.zosimadis.ilias.materialdesign.com.zosimadis.ilias.materialdesign.NavigationDrawerFragmnet">
+    tools:context="com.zosimadis.ilias.materialdesign.Activities.NavigationDrawerFragmnet">
 
     <LinearLayout
         android:id="@+id/containerDrawerImage"

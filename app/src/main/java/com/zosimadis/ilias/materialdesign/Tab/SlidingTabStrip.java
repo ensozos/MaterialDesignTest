@@ -1,4 +1,4 @@
-package com.zosimadis.ilias.materialdesign.com.zosimadis.ilias.materialdesign.Tab;
+package com.zosimadis.ilias.materialdesign.Tab;
 /*
  * Copyright 2014 Google Inc. All rights reserved.
  *
