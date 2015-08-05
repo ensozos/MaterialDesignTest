@@ -12,6 +12,7 @@ import android.content.Context;
 public class MyApplication extends Application {
 
     private static MyApplication mInstance;
+    public static final String API_KEY = "a24511b30c51d892aa690f2177a755ed";
 
     @Override
     public void onCreate() {

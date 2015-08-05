@@ -11,6 +11,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.zosimadis.ilias.materialdesign.Fragments.FragmentCollections;
+import com.zosimadis.ilias.materialdesign.Fragments.FragmentSearch;
+import com.zosimadis.ilias.materialdesign.Fragments.FragmentUpcoming;
+import com.zosimadis.ilias.materialdesign.Fragments.Myfragment;
 import com.zosimadis.ilias.materialdesign.R;
 
 import it.neokree.materialtabs.MaterialTab;
@@ -23,6 +27,10 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
     private MaterialTabHost tabHost;
     private ViewPager viewPager;
     private android.support.v7.widget.Toolbar toolbar;
+
+    public static final int MOVIE_SEARCH_RESULT = 1;
+    public static final int MOVIE_UPCOMING_RESULT = 2;
+    public static final int NOT_SURE_YET = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,16 +114,26 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
     private class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
 
-
         public ViewPagerAdapter(FragmentManager fm) {
             super(fm);
 
         }
 
         public Fragment getItem(int num) {
-
+//
+//            Fragment fragment = null;
+//            switch (num) {
+//                case MOVIE_SEARCH_RESULT:
+//                    fragment = FragmentSearch.newInstance("","");
+//                    break;
+//                case MOVIE_UPCOMING_RESULT:
+//                    fragment = FragmentUpcoming.newInstance("","");
+//                    break;
+//                case NOT_SURE_YET:
+//                    fragment = FragmentCollections.newInstance("","");
+//                    break;
+//            }
             return Myfragment.getInstance(num);
-
         }
 
         @Override

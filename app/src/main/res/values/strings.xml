@@ -11,8 +11,8 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">close</string>
     <string-array name="tabs">
-        <item>Tab1</item>
-        <item>Tab2</item>
+        <item>Search</item>
+        <item>UpComing</item>
         <item>Tab3</item>
     </string-array>
 

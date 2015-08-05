@@ -1,4 +1,4 @@
-package com.zosimadis.ilias.materialdesign.Activities;
+package com.zosimadis.ilias.materialdesign.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,6 +19,7 @@ import com.zosimadis.ilias.materialdesign.Network.VolleySingleton;
 import com.zosimadis.ilias.materialdesign.R;
 
 /**
+ * Test for volley request
  * Created by Windows on 23-01-2015.
  */
 public class Myfragment extends Fragment {
