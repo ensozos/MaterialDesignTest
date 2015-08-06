@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/primaryColor"
-    app:theme="@style/MyCustomBar">
+    android:theme="@style/MyCustomBar">
 
 
 </android.support.v7.widget.Toolbar>

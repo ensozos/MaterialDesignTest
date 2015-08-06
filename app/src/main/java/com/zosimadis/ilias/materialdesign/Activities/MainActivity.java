@@ -8,8 +8,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.zosimadis.ilias.materialdesign.Fragments.FragmentCollections;
 import com.zosimadis.ilias.materialdesign.Fragments.FragmentSearch;
@@ -28,9 +30,9 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
     private ViewPager viewPager;
     private android.support.v7.widget.Toolbar toolbar;
 
-    public static final int MOVIE_SEARCH_RESULT = 1;
-    public static final int MOVIE_UPCOMING_RESULT = 2;
-    public static final int NOT_SURE_YET = 3;
+    public static final int MOVIE_SEARCH_RESULT = 0;
+    public static final int MOVIE_UPCOMING_RESULT = 1;
+    public static final int NOT_SURE_YET = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,20 +122,21 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
         }
 
         public Fragment getItem(int num) {
-//
-//            Fragment fragment = null;
-//            switch (num) {
-//                case MOVIE_SEARCH_RESULT:
-//                    fragment = FragmentSearch.newInstance("","");
-//                    break;
-//                case MOVIE_UPCOMING_RESULT:
-//                    fragment = FragmentUpcoming.newInstance("","");
-//                    break;
-//                case NOT_SURE_YET:
-//                    fragment = FragmentCollections.newInstance("","");
-//                    break;
-//            }
-            return Myfragment.getInstance(num);
+
+
+            Fragment fragment = null;
+            switch (num) {
+                case MOVIE_SEARCH_RESULT:
+                    fragment = FragmentSearch.newInstance("","");
+                    break;
+                case MOVIE_UPCOMING_RESULT:
+                    fragment = FragmentUpcoming.newInstance("","");
+                    break;
+                case NOT_SURE_YET:
+                    fragment = FragmentCollections.newInstance("","");
+                    break;
+            }
+            return fragment;
         }
 
         @Override
