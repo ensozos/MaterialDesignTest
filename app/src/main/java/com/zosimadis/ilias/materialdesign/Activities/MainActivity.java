@@ -8,15 +8,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.zosimadis.ilias.materialdesign.Fragments.FragmentCollections;
 import com.zosimadis.ilias.materialdesign.Fragments.FragmentSearch;
 import com.zosimadis.ilias.materialdesign.Fragments.FragmentUpcoming;
-import com.zosimadis.ilias.materialdesign.Fragments.Myfragment;
 import com.zosimadis.ilias.materialdesign.R;
 
 import it.neokree.materialtabs.MaterialTab;
