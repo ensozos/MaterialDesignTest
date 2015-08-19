@@ -35,13 +35,13 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.id_bar);
+        toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
 
         NavigationDrawerFragmnet drawerFragmnet = (NavigationDrawerFragmnet)
-                getFragmentManager().findFragmentById(R.id.nav_fragment_id);
+                getFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
 
-        drawerFragmnet.setUp(R.id.nav_fragment_id, (DrawerLayout) findViewById(R.id.drawer_layout_id), toolbar);
+        drawerFragmnet.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
 
         tabHost = (MaterialTabHost) findViewById(R.id.materialTabHost);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
@@ -51,10 +51,13 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
         viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
+
                 tabHost.setSelectedNavigationItem(position);
+
 
             }
         });
+
         //Add all the Tabs to the TabHost
         for (int i = 0; i < mAdapter.getCount(); i++) {
             tabHost.addTab(
@@ -102,7 +105,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
 
     @Override
     public void onTabReselected(MaterialTab materialTab) {
-
+        viewPager.setCurrentItem(materialTab.getPosition());
     }
 
     @Override
@@ -133,6 +136,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
                     fragment = FragmentCollections.newInstance("","");
                     break;
             }
+
             return fragment;
         }
 

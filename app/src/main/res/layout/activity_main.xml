@@ -1,52 +1,104 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/id_bar"
-        layout="@layout/action_bar" />
 
-    <it.neokree.materialtabs.MaterialTabHost
-        android:id="@+id/materialTabHost"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        app:textColor="@color/textColor"
-        app:primaryColor="@color/primaryColor"
-        app:accentColor="@color/accentColor" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <android.support.v4.view.ViewPager
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:id="@+id/viewPager"
-        android:layout_below="@id/materialTabHost"
-        />
-
-    <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/drawer_layout_id"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <FrameLayout
+        <LinearLayout
+            android:id="@+id/container_app_bar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <fragment
-            android:id="@+id/nav_fragment_id"
-            android:name="com.zosimadis.ilias.materialdesign.Activities.NavigationDrawerFragmnet"
-            android:layout_width="@dimen/nav_dim"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            app:layout="@layout/fragment_navigation_drawer_fragmnet"
-            tools:layout="@layout/fragment_navigation_drawer_fragmnet" />
+            <include
+                android:id="@+id/app_bar"
+                layout="@layout/action_bar" />
 
-    </android.support.v4.widget.DrawerLayout>
+            <it.neokree.materialtabs.MaterialTabHost
+                android:id="@+id/materialTabHost"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_below="@+id/app_bar"
+                app:accentColor="@color/accentColor"
+                app:iconColor="@android:color/white"
+                app:primaryColor="@color/primaryColor" />
+        </LinearLayout>
 
-</LinearLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_below="@+id/materialTabHost"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+
+    <fragment
+        android:id="@+id/fragment_navigation_drawer"
+        android:name="com.zosimadis.ilias.materialdesign.Activities.NavigationDrawerFragmnet"
+        android:layout_width="@dimen/nav_dim"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:layout="@@layout/fragment_navigation_drawer_fragmnet"
+        tools:layout="@layout/fragment_navigation_drawer_fragmnet" />
+</android.support.v4.widget.DrawerLayout>
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<include-->
+        <!--android:id="@+id/id_bar"-->
+        <!--layout="@layout/action_bar" />-->
+
+    <!--<it.neokree.materialtabs.MaterialTabHost-->
+        <!--android:id="@+id/materialTabHost"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="48dp"-->
+        <!--app:textColor="@color/textColor"-->
+        <!--app:primaryColor="@color/primaryColor"-->
+        <!--app:accentColor="@color/accentColor" />-->
+
+    <!--<android.support.v4.view.ViewPager-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:id="@+id/viewPager"-->
+        <!--android:layout_below="@id/materialTabHost"-->
+        <!--/>-->
+
+    <!--<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+        <!--xmlns:tools="http://schemas.android.com/tools"-->
+        <!--android:id="@+id/drawer_layout_id"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+        <!--<FrameLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" />-->
+
+        <!--<fragment-->
+            <!--android:id="@+id/nav_fragment_id"-->
+            <!--android:name="com.zosimadis.ilias.materialdesign.Activities.NavigationDrawerFragmnet"-->
+            <!--android:layout_width="@dimen/nav_dim"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_gravity="start"-->
+            <!--app:layout="@layout/fragment_navigation_drawer_fragmnet"-->
+            <!--tools:layout="@layout/fragment_navigation_drawer_fragmnet" />-->
+
+    <!--</android.support.v4.widget.DrawerLayout>-->
+
+<!--</LinearLayout>-->
 
 
 

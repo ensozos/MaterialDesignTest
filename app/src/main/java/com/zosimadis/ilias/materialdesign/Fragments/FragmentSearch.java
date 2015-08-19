@@ -15,6 +15,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.zosimadis.ilias.materialdesign.Activities.MyApplication;
 import com.zosimadis.ilias.materialdesign.Log.L;
+import com.zosimadis.ilias.materialdesign.Network.UrlEndopoints;
 import com.zosimadis.ilias.materialdesign.Network.VolleySingleton;
 import com.zosimadis.ilias.materialdesign.R;
 
@@ -25,10 +26,10 @@ import org.json.JSONObject;
  * Use the {@link FragmentSearch#newInstance} factory method to
  * create an instance of this fragment.
  */
-//TODO: Fix request layout problem
+
 public class FragmentSearch extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
-    public static final String URL_MOVIEDB_SEARCH = "http://api.themoviedb.org/3/search/movie";
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private VolleySingleton volleySingleton;
@@ -68,36 +69,37 @@ public class FragmentSearch extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        volleySingleton = VolleySingleton.getInstance();
-        requestQueue = volleySingleton.getRequestQueue();
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                getRequest("robot", 2),
-                (String) null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        L.t(getActivity(),response.toString());
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                });
-        requestQueue.add(jsonObjectRequest);
+//        volleySingleton = VolleySingleton.getInstance();
+//        requestQueue = volleySingleton.getRequestQueue();
+//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+//                getRequest("robot", 2),
+//                (String) null,
+//                new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                        L.t(getActivity(),response.toString());
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//
+//                    }
+//                });
+//        requestQueue.add(jsonObjectRequest);
     }
 
 
     public static String getRequest(String val, int limit) {
-        return URL_MOVIEDB_SEARCH + "?api_key=" + MyApplication.API_KEY + "&query=" + val + "&page=" + limit;
+        return UrlEndopoints.URL_MOVIEDB_SEARCH +  UrlEndopoints.URL_CHAR_PARAM + UrlEndopoints.API_KEY + UrlEndopoints.URL_CHAR_QUERY + val + UrlEndopoints.URL_CHAR_PAGE + limit;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false);
+        View view = inflater.inflate(R.layout.fragment_search, container, false);
+        return view;
     }
 
 

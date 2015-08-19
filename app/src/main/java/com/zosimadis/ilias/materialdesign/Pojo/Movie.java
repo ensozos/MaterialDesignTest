@@ -6,22 +6,24 @@ import java.util.Date;
  * Created by ilias on 5/8/2015.
  */
 public class Movie {
-    private int id;
-    private String lunguage;
+    private long id;
+    private String language;
     private String title;
     private Date releaseDate;
     private int vote;
     private String overview;
     private String urlImage;
+    private int popularity;
 
     public Movie() {
 
     }
 
-    public Movie(int id, String lunguage, String title, Date releaseDate, int vote, String overview, String urlImage) {
+    public Movie(long id, String lunguage, String title, Date releaseDate, int vote, String overview, String urlImage, int popularity) {
 
         this.id = id;
-        this.lunguage = lunguage;
+        this.language = lunguage;
+        this.popularity = popularity;
         this.title = title;
         this.releaseDate = releaseDate;
         this.vote = vote;
@@ -30,12 +32,16 @@ public class Movie {
 
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public void setLunguage(String lunguage) {
-        this.lunguage = lunguage;
+    public void setPopularity(int popularity) {
+        this.popularity = popularity;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     public void setTitle(String title) {
@@ -58,7 +64,7 @@ public class Movie {
         this.urlImage = urlImage;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -70,8 +76,8 @@ public class Movie {
         return vote;
     }
 
-    public String getLunguage() {
-        return lunguage;
+    public String getLanguage() {
+        return language;
     }
 
     public String getOverview() {
@@ -82,7 +88,22 @@ public class Movie {
         return title;
     }
 
+    public int getPopularity() {
+        return popularity;
+    }
+
     public String getUrlImage() {
         return urlImage;
+    }
+
+    @Override
+    public String toString() {
+        return "ID: " + id +
+                "LANG: " + language +
+                "Title: " + title +
+                "Overview: " + overview +
+                "Release: " + releaseDate +
+                "Vote: " + vote +
+                "Popularity+ " + popularity;
     }
 }
