@@ -2,6 +2,7 @@ package com.zosimadis.ilias.materialdesign.Fragments;
 
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,6 +44,7 @@ public class FragmentUpcoming extends Fragment implements Keys.UpcomingEndpoints
     // TODO: Rename parameter arguments, choose names that match
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String STATE_MOVIE = "state_movie";
     private VolleySingleton volleySingleton;
     private RequestQueue requestQueue;
     private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -86,6 +88,12 @@ public class FragmentUpcoming extends Fragment implements Keys.UpcomingEndpoints
         volleySingleton = VolleySingleton.getInstance();
         requestQueue = volleySingleton.getRequestQueue();
         sendJsonRequest();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(STATE_MOVIE, (ArrayList<? extends Parcelable>) resultMovies);
     }
 
     private void sendJsonRequest() {
@@ -172,7 +180,13 @@ public class FragmentUpcoming extends Fragment implements Keys.UpcomingEndpoints
         listUpcomingMovies.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapterUpcoming = new AdapterUpcoming(getActivity());
         listUpcomingMovies.setAdapter(adapterUpcoming);
-        sendJsonRequest();
+        if(savedInstanceState != null){
+            resultMovies = savedInstanceState.getParcelableArrayList(STATE_MOVIE);
+            adapterUpcoming.setListMovies(resultMovies);
+        }else{
+            sendJsonRequest();
+        }
+
         return view;
     }
 

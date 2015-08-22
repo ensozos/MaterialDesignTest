@@ -1,6 +1,9 @@
 package com.zosimadis.ilias.materialdesign.Activities;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,8 +32,10 @@ public class AdapterUpcoming extends RecyclerView.Adapter<AdapterUpcoming.ViewHo
     private List<Movie> listMovies = new ArrayList<>();
     private VolleySingleton volleySingleton;
     private ImageLoader imageLoader;
+    private Context context;
 
     public AdapterUpcoming(Context context) {
+        this.context = context;
         layoutInflater = LayoutInflater.from(context);
         volleySingleton = VolleySingleton.getInstance();
         imageLoader = volleySingleton.getImageLoader();
@@ -55,7 +60,7 @@ public class AdapterUpcoming extends RecyclerView.Adapter<AdapterUpcoming.ViewHo
         holder.movieTitle.setText(currentMovie.getTitle());
         holder.movieDate.setText(currentMovie.getReleaseDate().toString());
         holder.movieVote.setRating(currentMovie.getVote());
-        String urlPoster = currentMovie.getUrlImage();
+        final String urlPoster = currentMovie.getUrlImage();
         if (urlPoster != null) {
             imageLoader.get(UrlEndopoints.URL_IMAGE + urlPoster, new ImageLoader.ImageListener() {
                 @Override
@@ -65,7 +70,7 @@ public class AdapterUpcoming extends RecyclerView.Adapter<AdapterUpcoming.ViewHo
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    L.m("IMAGE", "ERROR IMAGE RESPONSE!");
+                    holder.moviePoster.setImageBitmap(BitmapFactory.decodeResource(context.getResources(),R.mipmap.ic_launcher));
                 }
             });
         }
