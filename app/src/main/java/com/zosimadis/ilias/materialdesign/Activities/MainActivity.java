@@ -1,6 +1,8 @@
 package com.zosimadis.ilias.materialdesign.Activities;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -15,17 +17,22 @@ import com.zosimadis.ilias.materialdesign.Fragments.FragmentCollections;
 import com.zosimadis.ilias.materialdesign.Fragments.FragmentSearch;
 import com.zosimadis.ilias.materialdesign.Fragments.FragmentUpcoming;
 import com.zosimadis.ilias.materialdesign.R;
+import com.zosimadis.ilias.materialdesign.Services.MyService;
 
 import it.neokree.materialtabs.MaterialTab;
 import it.neokree.materialtabs.MaterialTabHost;
 import it.neokree.materialtabs.MaterialTabListener;
+import me.tatarka.support.job.JobInfo;
+import me.tatarka.support.job.JobScheduler;
 
 
 public class MainActivity extends ActionBarActivity implements MaterialTabListener {
 
+    private static final int JOB_ID = 0;
     private MaterialTabHost tabHost;
     private ViewPager viewPager;
     private android.support.v7.widget.Toolbar toolbar;
+    private JobScheduler jobScheduler;
 
     public static final int MOVIE_SEARCH_RESULT = 0;
     public static final int MOVIE_UPCOMING_RESULT = 1;
@@ -35,6 +42,8 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        jobScheduler = JobScheduler.getInstance(this);
+        constructJob();
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
 
@@ -127,13 +136,13 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
             Fragment fragment = null;
             switch (num) {
                 case MOVIE_SEARCH_RESULT:
-                    fragment = FragmentSearch.newInstance("","");
+                    fragment = FragmentSearch.newInstance("", "");
                     break;
                 case MOVIE_UPCOMING_RESULT:
-                    fragment = FragmentUpcoming.newInstance("","");
+                    fragment = FragmentUpcoming.newInstance("", "");
                     break;
                 case NOT_SURE_YET:
-                    fragment = FragmentCollections.newInstance("","");
+                    fragment = FragmentCollections.newInstance("", "");
                     break;
             }
 
@@ -151,6 +160,13 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
         }
 
 
+    }
+
+    private void constructJob() {
+        JobInfo.Builder jobInfo = new JobInfo.Builder(JOB_ID, new ComponentName(this, MyService.class));
+       // PersistableBundle persitableBundle = new PersistableBundle();
+        jobInfo.setPeriodic(2000).setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED).setPersisted(true);
+        jobScheduler.schedule(jobInfo.build());
     }
 
 }

@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.zosimadis.ilias.materialdesign.Log.L;
 import com.zosimadis.ilias.materialdesign.Network.UrlEndopoints;
 import com.zosimadis.ilias.materialdesign.Network.VolleySingleton;
 import com.zosimadis.ilias.materialdesign.Pojo.Movie;
