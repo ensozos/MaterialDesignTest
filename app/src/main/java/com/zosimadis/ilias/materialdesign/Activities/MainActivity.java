@@ -33,6 +33,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
     private ViewPager viewPager;
     private android.support.v7.widget.Toolbar toolbar;
     private JobScheduler jobScheduler;
+    private static final long POLL_FREQUENCY = 120000;
 
     public static final int MOVIE_SEARCH_RESULT = 0;
     public static final int MOVIE_UPCOMING_RESULT = 1;
@@ -165,7 +166,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
     private void constructJob() {
         JobInfo.Builder jobInfo = new JobInfo.Builder(JOB_ID, new ComponentName(this, MyService.class));
        // PersistableBundle persitableBundle = new PersistableBundle();
-        jobInfo.setPeriodic(2000).setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED).setPersisted(true);
+        jobInfo.setPeriodic(POLL_FREQUENCY).setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED).setPersisted(true);
         jobScheduler.schedule(jobInfo.build());
     }
 

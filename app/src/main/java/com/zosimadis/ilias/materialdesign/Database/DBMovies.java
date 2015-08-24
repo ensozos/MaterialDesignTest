@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by ilias on 23/8/2015.
@@ -33,28 +34,30 @@ public class DBMovies {
         mDatabase = moviesHelper.getWritableDatabase();
     }
 
-    public void insertMovies(ArrayList<Movie> listMovies, boolean clearPrevious) {
+    public void insertMovies(List<Movie> listMovies, boolean clearPrevious) {
 
         if(clearPrevious){
             deleteMovies();
         }
 
         //create a sql prepared statement
-        String sql = "INSERT INTO " + MoviesHelper.TABLE_UP_COMMING + "VALUES (?,?,?,?,?,?)";
+        String sql = " INSERT INTO " + MoviesHelper.TABLE_UP_COMMING + " VALUES (?,?,?,?,?,?,?,?);";
         SQLiteStatement statement = mDatabase.compileStatement(sql);
         mDatabase.beginTransaction();
+
         for (int i = 0; i < listMovies.size(); i++) {
             Movie currentMovie = listMovies.get(i);
             statement.clearBindings();
             //for a given column index, simply bind the data to be put inside that index
-            statement.bindString(2, currentMovie.getTitle());
-            statement.bindLong(3, currentMovie.getReleaseDate() == null ? -1 : currentMovie.getReleaseDate().getTime());
-            statement.bindLong(4, currentMovie.getId());
+            statement.bindLong(2, currentMovie.getId());
+            statement.bindString(3, currentMovie.getTitle());
+            statement.bindLong(4, currentMovie.getReleaseDate() == null ? -1 : currentMovie.getReleaseDate().getTime());
+            statement.bindDouble(5, currentMovie.getVote());
             statement.bindString(5, currentMovie.getOverview());
             statement.bindString(6, currentMovie.getUrlImage());
-            statement.bindString(7, currentMovie.getLanguage());
             statement.bindDouble(8, currentMovie.getPopularity());
-            statement.bindDouble(9, currentMovie.getVote());
+            statement.bindString(7, currentMovie.getLanguage());
+
 
             statement.execute();
         }
@@ -62,8 +65,8 @@ public class DBMovies {
         mDatabase.endTransaction();
     }
 
-    public ArrayList<Movie> readMovies() {
-        ArrayList<Movie> listMovies = new ArrayList<>();
+    public List<Movie> readMovies() {
+        List<Movie> listMovies = new ArrayList<>();
 
         //get a list of columns to be retrieved, we need all of them
         String[] columns = {MoviesHelper.COLUMN_UID,
@@ -75,6 +78,8 @@ public class DBMovies {
                 MoviesHelper.COLUMN_POPULARITY,
                 MoviesHelper.COLUMN_LANG,
         };
+
+
         Cursor cursor = mDatabase.query(MoviesHelper.TABLE_UP_COMMING, columns, null, null, null, null, null);
         if (cursor != null && cursor.moveToFirst()) {
             do {
@@ -86,12 +91,12 @@ public class DBMovies {
                 movie.setTitle(cursor.getString(cursor.getColumnIndex(MoviesHelper.COLUMN_TITLE)));
                 long releaseDateMilliseconds = cursor.getLong(cursor.getColumnIndex(MoviesHelper.COLUMN_RELEASE_DATE));
                 movie.setReleaseDate(releaseDateMilliseconds != -1 ? new Date(releaseDateMilliseconds) : null);
-                movie.setUrlImage(cursor.getString(cursor.getColumnIndex(MoviesHelper.COLUMN_URL_POSTER)));
-                movie.setLanguage(cursor.getString(cursor.getColumnIndex(MoviesHelper.COLUMN_LANG)));
-                movie.setPopularity(cursor.getInt(cursor.getColumnIndex(MoviesHelper.COLUMN_POPULARITY)));
                 movie.setVote(cursor.getInt(cursor.getColumnIndex(MoviesHelper.COLUMN_VOTE)));
-                movie.setUrlImage(cursor.getString(cursor.getColumnIndex(MoviesHelper.COLUMN_URL_POSTER)));
                 movie.setOverview(cursor.getString(cursor.getColumnIndex(MoviesHelper.COLUMN_OVERVIEW)));
+                movie.setUrlImage(cursor.getString(cursor.getColumnIndex(MoviesHelper.COLUMN_URL_POSTER)));
+                movie.setPopularity(cursor.getInt(cursor.getColumnIndex(MoviesHelper.COLUMN_POPULARITY)));
+                movie.setLanguage(cursor.getString(cursor.getColumnIndex(MoviesHelper.COLUMN_LANG)));
+
 
                 //add the movie to the list of movie objects which we plan to return
                 listMovies.add(movie);
@@ -109,7 +114,7 @@ public class DBMovies {
 
     private static class MoviesHelper extends SQLiteOpenHelper {
 
-        public static final String TABLE_UP_COMMING = " movies_upcoming";
+        public static final String TABLE_UP_COMMING = "movies";
         public static final String COLUMN_UID = "_id";
         public static final String COLUMN_TITLE = "title";
         public static final String COLUMN_RELEASE_DATE = "release_date";
@@ -128,8 +133,10 @@ public class DBMovies {
                 COLUMN_OVERVIEW + " TEXT," +
                 COLUMN_URL_POSTER + " TEXT," +
                 COLUMN_POPULARITY + " INTEGER," +
-                COLUMN_LANG + " TEXT," +
+                COLUMN_LANG + " TEXT" +
                 ");";
+
+
         private static final String DB_NAME = "movies_db";
         private static final int DB_VERSION = 1;
         private Context mContext;
@@ -137,24 +144,28 @@ public class DBMovies {
         public MoviesHelper(Context context) {
             super(context, DB_NAME, null, DB_VERSION);
             mContext = context;
+            Log.i("DATABASE","moviesHepler");
         }
 
         @Override
         public void onCreate(SQLiteDatabase db) {
             try {
+                Log.i("DATABASE","oncreate");
                 db.execSQL(CREATE_TABLE_UPCOMMING);
+                Log.i("DATABASE","table created");
             } catch (SQLiteException exception) {
-                L.t(mContext, exception + "");
+                L.t(mContext, exception + "poutses mple");
             }
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             try {
+                Log.i("DATABASE","onUpgrade");
                 db.execSQL(" DROP TABLE " + TABLE_UP_COMMING + " IF EXISTS;");
                 onCreate(db);
             } catch (SQLiteException exception) {
-                L.t(mContext, exception + "");
+                L.t(mContext, exception + "poutses mple 2");
             }
         }
     }

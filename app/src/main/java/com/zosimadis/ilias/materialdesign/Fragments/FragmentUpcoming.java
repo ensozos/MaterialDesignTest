@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.zosimadis.ilias.materialdesign.Activities.AdapterUpcoming;
+import com.zosimadis.ilias.materialdesign.Activities.MyApplication;
 import com.zosimadis.ilias.materialdesign.Log.L;
 import com.zosimadis.ilias.materialdesign.Network.Keys;
 import com.zosimadis.ilias.materialdesign.Network.UrlEndopoints;
@@ -40,14 +41,11 @@ import java.util.List;
  * Use the {@link FragmentUpcoming#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentUpcoming extends Fragment implements Keys.UpcomingEndpoints {
+public class FragmentUpcoming extends Fragment{
     // TODO: Rename parameter arguments, choose names that match
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final String STATE_MOVIE = "state_movie";
-    private VolleySingleton volleySingleton;
-    private RequestQueue requestQueue;
-    private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private List<Movie> resultMovies = new ArrayList<>();
     private RecyclerView listUpcomingMovies;
     private AdapterUpcoming adapterUpcoming;
@@ -85,90 +83,13 @@ public class FragmentUpcoming extends Fragment implements Keys.UpcomingEndpoints
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        volleySingleton = VolleySingleton.getInstance();
-        requestQueue = volleySingleton.getRequestQueue();
-        sendJsonRequest();
+
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList(STATE_MOVIE, (ArrayList<? extends Parcelable>) resultMovies);
-    }
-
-    private void sendJsonRequest() {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                getRequest(3),
-                (String) null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        resultMovies = parseJSONResponse(response);
-                        adapterUpcoming.setListMovies(resultMovies);
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                        Log.i("UpComing",error+"");
-
-                    }
-                });
-        requestQueue.add(jsonObjectRequest);
-    }
-
-    private List<Movie> parseJSONResponse(JSONObject response) {
-
-        List<Movie> movieList = new ArrayList<>();
-
-        if (response != null && response.length() != 0) {
-
-            try {
-
-                JSONArray results = null;
-                results = response.getJSONArray(KEY_RESULTS);
-                for (int i = 0; i < results.length(); i++) {
-                    Movie movie = new Movie();
-                    JSONObject currentMovie = results.getJSONObject(i);
-                    Long id = currentMovie.getLong(KEY_ID);
-                    String title = currentMovie.getString(KEY_TITLE);
-                    String overview = currentMovie.getString(KEY_OVERVIEW);
-                    int popularity = currentMovie.getInt(KEY_POPULARITY);
-                    int vote = currentMovie.getInt(KEY_VOTE);
-                    String language = currentMovie.getString(KEY_LANG);
-                    String dateString = currentMovie.getString(KEY_RELEASE);
-                    Date date = dateFormat.parse(dateString);
-                    String poster = currentMovie.getString(KEY_POSTER);
-
-
-                    movie.setId(id);
-                    movie.setTitle(title);
-                    movie.setLanguage(language);
-                    movie.setOverview(overview);
-                    movie.setVote(vote);
-                    movie.setPopularity(popularity);
-                    movie.setUrlImage(poster);
-                    movie.setReleaseDate(date);
-                    movieList.add(movie);
-                }
-
-
-
-            } catch (JSONException e) {
-                L.m("UpCommign","JSON ERROR!");
-            } catch (ParseException e) {
-                L.m("UpComming", "Bad Date Format!");
-            }
-
-        }
-        return movieList;
-
-    }
-
-    public static String getRequest(int limit) {
-        return UrlEndopoints.URL_MOVIEDB_UPCOMING + UrlEndopoints.URL_CHAR_PARAM + UrlEndopoints.API_KEY + UrlEndopoints.URL_CHAR_PAGE+limit;
     }
 
 
@@ -180,13 +101,13 @@ public class FragmentUpcoming extends Fragment implements Keys.UpcomingEndpoints
         listUpcomingMovies.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapterUpcoming = new AdapterUpcoming(getActivity());
         listUpcomingMovies.setAdapter(adapterUpcoming);
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             resultMovies = savedInstanceState.getParcelableArrayList(STATE_MOVIE);
-            adapterUpcoming.setListMovies(resultMovies);
-        }else{
-            sendJsonRequest();
-        }
 
+        } else {
+            resultMovies = MyApplication.getWritableDatabase().readMovies();
+        }
+        adapterUpcoming.setListMovies(resultMovies);
         return view;
     }
 
