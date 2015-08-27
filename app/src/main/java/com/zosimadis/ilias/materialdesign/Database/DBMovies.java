@@ -49,14 +49,14 @@ public class DBMovies {
             Movie currentMovie = listMovies.get(i);
             statement.clearBindings();
             //for a given column index, simply bind the data to be put inside that index
-            statement.bindLong(2, currentMovie.getId());
-            statement.bindString(3, currentMovie.getTitle());
-            statement.bindLong(4, currentMovie.getReleaseDate() == null ? -1 : currentMovie.getReleaseDate().getTime());
-            statement.bindDouble(5, currentMovie.getVote());
+//            statement.bindLong(0, currentMovie.getId());
+            statement.bindString(2, currentMovie.getTitle());
+            statement.bindLong(3, currentMovie.getReleaseDate() == null ? -1 : currentMovie.getReleaseDate().getTime());
+            statement.bindDouble(4, currentMovie.getVote());
             statement.bindString(5, currentMovie.getOverview());
             statement.bindString(6, currentMovie.getUrlImage());
-            statement.bindDouble(8, currentMovie.getPopularity());
-            statement.bindString(7, currentMovie.getLanguage());
+            statement.bindDouble(7, currentMovie.getPopularity());
+            statement.bindString(8, currentMovie.getLanguage());
 
 
             statement.execute();
@@ -154,7 +154,7 @@ public class DBMovies {
                 db.execSQL(CREATE_TABLE_UPCOMMING);
                 Log.i("DATABASE","table created");
             } catch (SQLiteException exception) {
-                L.t(mContext, exception + "poutses mple");
+                L.t(mContext, exception+"");
             }
         }
 
@@ -165,7 +165,7 @@ public class DBMovies {
                 db.execSQL(" DROP TABLE " + TABLE_UP_COMMING + " IF EXISTS;");
                 onCreate(db);
             } catch (SQLiteException exception) {
-                L.t(mContext, exception + "poutses mple 2");
+                L.t(mContext, exception +"");
             }
         }
     }

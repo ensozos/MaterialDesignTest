@@ -13,4 +13,8 @@ public class UrlEndopoints {
     public static final String URL_CHAR_QUERY = "&query=";
     public static final String URL_CHAR_PAGE = "&page=";
 
+    public static String getRequest(int limit) {
+        return UrlEndopoints.URL_MOVIEDB_UPCOMING + UrlEndopoints.URL_CHAR_PARAM + UrlEndopoints.API_KEY + UrlEndopoints.URL_CHAR_PAGE + limit;
+    }
+
 }

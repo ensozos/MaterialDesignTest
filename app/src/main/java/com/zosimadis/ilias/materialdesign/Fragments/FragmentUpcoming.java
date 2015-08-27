@@ -24,6 +24,8 @@ import com.zosimadis.ilias.materialdesign.Network.UrlEndopoints;
 import com.zosimadis.ilias.materialdesign.Network.VolleySingleton;
 import com.zosimadis.ilias.materialdesign.Pojo.Movie;
 import com.zosimadis.ilias.materialdesign.R;
+import com.zosimadis.ilias.materialdesign.Task.UpcomingTask;
+import com.zosimadis.ilias.materialdesign.callbacks.UpcomingLoadedListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,7 +43,7 @@ import java.util.List;
  * Use the {@link FragmentUpcoming#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentUpcoming extends Fragment{
+public class FragmentUpcoming extends Fragment implements UpcomingLoadedListener {
     // TODO: Rename parameter arguments, choose names that match
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -106,10 +108,17 @@ public class FragmentUpcoming extends Fragment{
 
         } else {
             resultMovies = MyApplication.getWritableDatabase().readMovies();
+            if(resultMovies.isEmpty()){
+                new UpcomingTask(this).execute();
+            }
         }
         adapterUpcoming.setListMovies(resultMovies);
         return view;
     }
 
 
+    @Override
+    public void onUpcomingLoaded(List<Movie> movieList) {
+        adapterUpcoming.setListMovies(movieList);
+    }
 }

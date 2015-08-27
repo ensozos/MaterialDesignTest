@@ -16,6 +16,8 @@ import com.zosimadis.ilias.materialdesign.Network.Keys;
 import com.zosimadis.ilias.materialdesign.Network.UrlEndopoints;
 import com.zosimadis.ilias.materialdesign.Network.VolleySingleton;
 import com.zosimadis.ilias.materialdesign.Pojo.Movie;
+import com.zosimadis.ilias.materialdesign.Task.UpcomingTask;
+import com.zosimadis.ilias.materialdesign.callbacks.UpcomingLoadedListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,11 +39,14 @@ import me.tatarka.support.job.JobService;
 /**
  * Created by ilias on 23/8/2015.
  */
-public class MyService extends JobService {
+public class MyService extends JobService implements UpcomingLoadedListener {
+
+   private JobParameters jobPara;
     @Override
     public boolean onStartJob(JobParameters jobParameters) {
+        this.jobPara = jobParameters;
         L.t(getApplicationContext(), "onStartJob");
-        new MyTask(this).execute(jobParameters);
+        new UpcomingTask(this).execute();
         return true;
     }
 
@@ -50,115 +55,9 @@ public class MyService extends JobService {
         return false;
     }
 
-    private static class MyTask extends AsyncTask<JobParameters, Void, JobParameters> implements Keys.UpcomingEndpoints {
 
-        private VolleySingleton volleySingleton;
-        private RequestQueue requestQueue;
-        private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        MyService myService;
-
-        MyTask(MyService myService) {
-            this.myService = myService;
-            volleySingleton = VolleySingleton.getInstance();
-            requestQueue = volleySingleton.getRequestQueue();
-        }
-
-        private JSONObject sendJsonRequest() {
-
-            JSONObject response = null;
-            RequestFuture<JSONObject> requestFuture = RequestFuture.newFuture();
-
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                    getRequest(3),
-                    (String) null,
-                    requestFuture, requestFuture
-            );
-            requestQueue.add(jsonObjectRequest);
-            try {
-                response = requestFuture.get(30000, TimeUnit.MILLISECONDS);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (TimeoutException e) {
-                e.printStackTrace();
-            }
-
-            return response;
-        }
-
-        private List<Movie> parseJSONResponse(JSONObject response) {
-
-            List<Movie> movieList = new ArrayList<>();
-
-            if (response != null && response.length() != 0) {
-
-                try {
-
-                    JSONArray results = null;
-                    results = response.getJSONArray(KEY_RESULTS);
-                    for (int i = 0; i < results.length(); i++) {
-                        Movie movie = new Movie();
-                        JSONObject currentMovie = results.getJSONObject(i);
-                        Long id = currentMovie.getLong(KEY_ID);
-                        String title = currentMovie.getString(KEY_TITLE);
-                        String overview = currentMovie.getString(KEY_OVERVIEW);
-                        int popularity = currentMovie.getInt(KEY_POPULARITY);
-                        int vote = currentMovie.getInt(KEY_VOTE);
-                        String language = currentMovie.getString(KEY_LANG);
-                        String dateString = currentMovie.getString(KEY_RELEASE);
-                        Date date = dateFormat.parse(dateString);
-                        String poster = currentMovie.getString(KEY_POSTER);
-
-
-                        movie.setId(id);
-                        movie.setTitle(title);
-                        movie.setLanguage(language);
-                        movie.setOverview(overview);
-                        movie.setVote(vote);
-                        movie.setPopularity(popularity);
-                        movie.setUrlImage(poster);
-                        movie.setReleaseDate(date);
-                        movieList.add(movie);
-                    }
-
-
-                } catch (JSONException e) {
-                    L.m("UpCommign", "JSON ERROR!");
-                } catch (ParseException e) {
-                    L.m("UpComming", "Bad Date Format!");
-                }
-
-            }
-            return movieList;
-
-        }
-
-        public static String getRequest(int limit) {
-            return UrlEndopoints.URL_MOVIEDB_UPCOMING + UrlEndopoints.URL_CHAR_PARAM + UrlEndopoints.API_KEY + UrlEndopoints.URL_CHAR_PAGE + limit;
-        }
-
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected JobParameters doInBackground(JobParameters... jobParameterses) {
-
-            JSONObject response = sendJsonRequest();
-            List<Movie> results = parseJSONResponse(response);
-            MyApplication.getWritableDatabase().insertMovies(results,true);
-            return jobParameterses[0];
-        }
-
-        @Override
-        protected void onPostExecute(JobParameters jobParameters) {
-            myService.jobFinished(jobParameters, false);
-
-        }
+    @Override
+    public void onUpcomingLoaded(List<Movie> movieList) {
+        jobFinished(jobPara,false);
     }
-
-
 }

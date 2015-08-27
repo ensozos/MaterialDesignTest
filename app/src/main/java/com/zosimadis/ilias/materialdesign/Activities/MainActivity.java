@@ -19,6 +19,8 @@ import com.zosimadis.ilias.materialdesign.Fragments.FragmentUpcoming;
 import com.zosimadis.ilias.materialdesign.R;
 import com.zosimadis.ilias.materialdesign.Services.MyService;
 
+import android.os.Handler;
+
 import it.neokree.materialtabs.MaterialTab;
 import it.neokree.materialtabs.MaterialTabHost;
 import it.neokree.materialtabs.MaterialTabListener;
@@ -33,7 +35,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
     private ViewPager viewPager;
     private android.support.v7.widget.Toolbar toolbar;
     private JobScheduler jobScheduler;
-    private static final long POLL_FREQUENCY = 120000;
+    private static final long POLL_FREQUENCY = 600000;
 
     public static final int MOVIE_SEARCH_RESULT = 0;
     public static final int MOVIE_UPCOMING_RESULT = 1;
@@ -44,7 +46,12 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         jobScheduler = JobScheduler.getInstance(this);
-        constructJob();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                constructJob();
+            }
+        }, 30000);
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
 
@@ -165,7 +172,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
 
     private void constructJob() {
         JobInfo.Builder jobInfo = new JobInfo.Builder(JOB_ID, new ComponentName(this, MyService.class));
-       // PersistableBundle persitableBundle = new PersistableBundle();
+        // PersistableBundle persitableBundle = new PersistableBundle();
         jobInfo.setPeriodic(POLL_FREQUENCY).setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED).setPersisted(true);
         jobScheduler.schedule(jobInfo.build());
     }
